@@ -1,7 +1,15 @@
 import time
 import rtmidi
 import keyboard
-from midi_config import MIDI_CHANNEL, PORT_NAME, COMMANDS
+import hid
+from midi_config import (
+    MIDI_CHANNEL, 
+    PORT_NAME, 
+    COMMANDS, 
+    SHUTTER_VENDOR_ID, 
+    SHUTTER_PRODUCT_ID, 
+    SHUTTER_ACTION
+)
 
 class MIDIController:
     def __init__(self):
@@ -9,7 +17,29 @@ class MIDIController:
         self.midi_out.open_virtual_port(PORT_NAME)
         self.states = {key: False for key in COMMANDS}
         self.setup_keyboard_hooks()
+        self.setup_shutter()
         
+    def setup_shutter(self):
+        try:
+            self.shutter = hid.device()
+            self.shutter.open(SHUTTER_VENDOR_ID, SHUTTER_PRODUCT_ID)
+            self.shutter.set_nonblocking(True)
+            print(f"\nShutter connected")
+        except Exception as e:
+            print(f"Warning: Could not connect to shutter device: {e}")
+            self.shutter = None
+
+    def read_shutter(self):
+        if not hasattr(self, 'shutter') or self.shutter is None:
+            return
+            
+        try:
+            data = self.shutter.read(64)
+            if data and data == [2, 2, 0]:  # Shutter button press
+                self.toggle_effect(SHUTTER_ACTION)
+        except Exception as e:
+            pass  # Ignore read errors
+
     def send_cc(self, cc_number, value):
         status_byte = 0xB0 | (MIDI_CHANNEL - 1)
         self.midi_out.send_message([status_byte, cc_number, value])
@@ -34,6 +64,8 @@ class MIDIController:
 
     def cleanup(self):
         keyboard.unhook_all()
+        if hasattr(self, 'shutter') and self.shutter is not None:
+            self.shutter.close()
         self.midi_out.close_port()
         del self.midi_out
 
@@ -47,7 +79,8 @@ def main():
         print("\nPress 'Ctrl+C' to exit")
         
         while True:
-            time.sleep(0.1)
+            controller.read_shutter()
+            time.sleep(0.01)
 
     except KeyboardInterrupt:
         print("\nProgram terminated")
