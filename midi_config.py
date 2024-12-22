@@ -1,8 +1,8 @@
-# Configuración del controlador MIDI
+# MIDI Controller Configuration
 MIDI_CHANNEL = 1
 PORT_NAME = "Python MIDI Controller"
 
-# Mapeo de teclas a códigos MIDI (tecla: (cc_number, descripción))
+# Key mapping to MIDI codes (key: (cc_number, description))
 COMMANDS = {
     'z': (5, 'Booster'),
     'x': (6, 'Mod'),

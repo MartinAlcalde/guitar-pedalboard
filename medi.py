@@ -40,17 +40,17 @@ class MIDIController:
 def main():
     try:
         controller = MIDIController()
-        print(f"\nControlador MIDI iniciado en puerto: {PORT_NAME}")
-        print("Comandos disponibles:")
+        print(f"\nMIDI Controller started on port: {PORT_NAME}")
+        print("Available commands:")
         for key, (_, effect) in COMMANDS.items():
-            print(f"Tecla '{key}': {effect}")
-        print("\nPresiona 'Ctrl+C' para salir")
+            print(f"Key '{key}': {effect}")
+        print("\nPress 'Ctrl+C' to exit")
         
         while True:
             time.sleep(0.1)
 
     except KeyboardInterrupt:
-        print("\nPrograma terminado")
+        print("\nProgram terminated")
     finally:
         if 'controller' in locals():
             controller.cleanup()
