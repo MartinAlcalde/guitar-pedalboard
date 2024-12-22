@@ -13,6 +13,8 @@ This project aims to create a configurable MIDI controller that interacts with v
 - **BIAS FX 2**
 - **Boss Katana 50**
 
+The primary goal of the project is to enable the creation of affordable pedalboards using household devices to interact with simulation software. Official footswitches for these platforms are often proprietary, expensive, and difficult to obtain.
+
 ### Compatibility
 Currently, the project only supports **macOS**.
 
@@ -34,17 +36,17 @@ The workflow for this project is as follows:
 
 1. **Input:** Shutter sends a signal to the computer.
 2. **Processing:** Scripts intercept the signal and map it to the corresponding MIDI code.
-3. **Output:** The MIDI code is sent to the target application or device, such as BIAS FX or Boss Katana.
+3. **Output:** The MIDI code is sent to the MIDI channel via the created MIDI controller.
 
 ### Example Flows
 - **Turning distortion on:**
   ```
-  shutter -> computer -> script intercepts signal -> maps to MIDI code -> BIAS FX -> distortion ON
+  shutter -> computer -> script intercepts signal -> maps to MIDI code -> MIDI channel -> distortion ON
   ```
 
 - **Turning distortion off:**
   ```
-  shutter -> computer -> script intercepts signal -> maps to MIDI code -> BIAS FX -> distortion OFF
+  shutter -> computer -> script intercepts signal -> maps to MIDI code -> MIDI channel -> distortion OFF
   ```
 
 ## Future Goals
