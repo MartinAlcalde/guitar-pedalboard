@@ -15,14 +15,86 @@ from midi_config import (
     JOYSTICK_ACTIONS
 )
 
+class JoystickHandler:
+    """Handles joystick input processing and button mapping."""
+    
+    # Button mapping for data bytes 5 and 6
+    BUTTON_MAPPING = {
+        (79, 0): 'X',
+        (143, 0): 'SQUARE',
+        (47, 0): 'CIRCLE',
+        (31, 0): 'TRIANGLE',
+        (15, 8): 'R1',
+        (15, 2): 'R2',
+        (15, 4): 'L1',
+        (15, 1): 'L2',
+        (15, 16): 'SELECT',
+        (15, 32): 'START'
+    }
+    
+    IDLE_STATE = (15, 0)  # No buttons pressed state
+    VALID_DATA_START = 1  # Valid joystick data should start with this byte
+    
+    def __init__(self):
+        self.last_action = None
+        self.debounce_time = 0.05  # 50ms debounce
+        self.last_press_time = 0
+    
+    def process_data(self, data, current_time):
+        """
+        Process joystick input data and return the corresponding action if valid.
+        
+        Args:
+            data: Raw joystick input data
+            current_time: Current timestamp for debounce checking
+            
+        Returns:
+            str or None: The corresponding action if a valid button press is detected
+        """
+        if not data or len(data) < 8:
+            return None
+            
+        data = list(data)
+        
+        # Check if this is valid button data
+        if data[0] != self.VALID_DATA_START:
+            return None
+            
+        button_state = (data[5], data[6])
+        
+        # Handle button release
+        if button_state == self.IDLE_STATE:
+            self.last_action = None
+            return None
+            
+        # Get the corresponding button if this is a valid button state
+        button = self.BUTTON_MAPPING.get(button_state)
+        if not button:
+            return None
+            
+        # Apply debouncing
+        if (current_time - self.last_press_time) < self.debounce_time:
+            return None
+            
+        # Only trigger if this is a new action
+        if button == self.last_action:
+            return None
+            
+        self.last_action = button
+        self.last_press_time = current_time
+        
+        return button
+
 class MIDIController:
     def __init__(self):
         self.midi_out = rtmidi.MidiOut()
         self.midi_out.open_virtual_port(PORT_NAME)
         self.states = {key: False for key in COMMANDS}
+        self.joystick_previous_states = {button: False for button in JOYSTICK_PATTERNS}
         self.setup_keyboard_hooks()
         self.setup_shutter()
         self.setup_joystick()
+        self.joystick_handler = JoystickHandler()
         
     def setup_joystick(self):
         try:
@@ -45,18 +117,22 @@ class MIDIController:
             self.shutter = None
 
     def read_joystick(self):
+        """Read and process joystick input."""
         if not hasattr(self, 'joystick') or self.joystick is None:
             return
             
         try:
             data = self.joystick.read(64)
-            if data:
-                for button, pattern in JOYSTICK_PATTERNS.items():
-                    if list(data) == pattern:
-                        self.toggle_effect(JOYSTICK_ACTIONS[button])
-                        break
+            if not data:
+                return
+                
+            button = self.joystick_handler.process_data(data, time.time())
+            if button and button in JOYSTICK_ACTIONS:
+                self.toggle_effect(JOYSTICK_ACTIONS[button])
+                
         except Exception as e:
-            pass  # Ignore read errors
+            print(f"Error reading joystick: {e}")
+            # Optionally attempt to reconnect or handle the error
 
     def read_shutter(self):
         if not hasattr(self, 'shutter') or self.shutter is None:
@@ -125,7 +201,7 @@ def main():
         while True:
             controller.read_shutter()
             controller.read_joystick()
-            time.sleep(0.01)
+            time.sleep(0.05)  # Aumentado a 50ms
 
     except KeyboardInterrupt:
         print("\nProgram terminated")
