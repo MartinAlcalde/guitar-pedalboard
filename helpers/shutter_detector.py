@@ -1,7 +1,7 @@
 import hid
 import time
 import rtmidi
-from midi_config import MIDI_CHANNEL, PORT_NAME, COMMANDS
+from config.midi_config import MIDI_CHANNEL, PORT_NAME, COMMANDS
 
 class MIDIController:
     def __init__(self):

@@ -1,9 +1,11 @@
-# MIDI Controller Configuration
-MIDI_CHANNEL = 1
-PORT_NAME = "Python MIDI Controller"
+from midi.controller import MIDIConfig
+
+# MIDI Configuration
+midi_channel = 1
+port_name = "Python MIDI Controller"
 
 # Key mapping to MIDI codes (key: (cc_number, description))
-COMMANDS = {
+commands = {
     '1': (1, 'Tunner'),
     '2': (2, 'Looper'),
     '3': (3, 'Compressor'),
@@ -21,3 +23,9 @@ COMMANDS = {
     'g': (15, 'Preset G'),
     'h': (16, 'Preset H'),
 }
+
+midi_config = MIDIConfig(
+    channel=midi_channel,
+    port_name=port_name,
+    commands=commands
+)

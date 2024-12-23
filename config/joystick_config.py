@@ -16,7 +16,7 @@ actions = {
     'START': 'b',      
 }
 
-config = JoystickConfig(
+joystick_config = JoystickConfig(
     vendor_id=vendor_id,
     product_id=product_id,
     actions=actions,
