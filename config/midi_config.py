@@ -1,16 +1,11 @@
-# MIDI Controller Configuration
-MIDI_CHANNEL = 1
-PORT_NAME = "Python MIDI Controller"
+from midi.controller import MIDIConfig
 
-# Shutter Configuration (USB HID)
-SHUTTER_VENDOR_ID = 0x248a
-SHUTTER_PRODUCT_ID = 0x8266
-SHUTTER_ACTION = 'z'  # The shutter will trigger the same action as this key
-
+# MIDI Configuration
+midi_channel = 1
+port_name = "Python MIDI Controller"
 
 # Key mapping to MIDI codes (key: (cc_number, description))
-# this can be used with any keyboard
-COMMANDS = {
+commands = {
     '1': (1, 'Tunner'),
     '2': (2, 'Looper'),
     '3': (3, 'Compressor'),
@@ -28,3 +23,9 @@ COMMANDS = {
     'g': (15, 'Preset G'),
     'h': (16, 'Preset H'),
 }
+
+midi_config = MIDIConfig(
+    channel=midi_channel,
+    port_name=port_name,
+    commands=commands
+)
