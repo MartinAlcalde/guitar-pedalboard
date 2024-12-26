@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 import rtmidi
-import keyboard
 from typing import Dict, Tuple
 
 @dataclass

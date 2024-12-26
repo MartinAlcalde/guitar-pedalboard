@@ -10,7 +10,7 @@ class ShutterConfig:
 class ShutterHandler:
     """Handles shutter input processing."""
     
-    BUTTON_PRESS_PATTERN = [2, 2, 0]
+    BUTTON_PRESS_PATTERN = [1, 1, 0]
     
     def __init__(self, config: ShutterConfig):
         self.config = config
