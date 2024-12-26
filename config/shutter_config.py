@@ -1,8 +1,5 @@
 from devices.shutter import ShutterConfig
 
-vendor_id = 0x2717
-product_id = 0x0040
-
 # este es el shutter que tengo en el pedal
 vendor_id = 0x2717
 product_id = 0x0040
@@ -13,9 +10,11 @@ product_id = 0x0040
 
 
 action = '5' # Toggle command "5" from midi_config
+action2 = '1'
 
 shutter_config = ShutterConfig(
     vendor_id=vendor_id,
     product_id=product_id,
-    action=action
+    action=action,
+    action2=action2
 )

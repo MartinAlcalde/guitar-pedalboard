@@ -6,6 +6,7 @@ class ShutterConfig:
     vendor_id: int
     product_id: int
     action: str
+    action2: str
 
 class ShutterHandler:
     """Handles shutter input processing."""
@@ -13,6 +14,7 @@ class ShutterHandler:
     # this is the tiny shutter
     # BUTTON_PRESS_PATTERN = [2, 2, 0] 
     BUTTON_PRESS_PATTERN = [1, 1, 0]
+    BUTTON2_PRESS_PATTERN = [1, 2, 0]
     
     def __init__(self, config: ShutterConfig):
         self.config = config
@@ -39,6 +41,8 @@ class ShutterHandler:
             data = self.device.read(64)
             if data and data == self.BUTTON_PRESS_PATTERN:
                 return self.config.action
+            elif data and data == self.BUTTON2_PRESS_PATTERN:
+                return self.config.action2 
         except Exception as e:
             return None
             
