@@ -1,0 +1,18 @@
+
+
+Device Information:
+Vendor ID: 2717
+Product ID: 0040
+Serial Number: 000000
+Manufacturer: zhuhai_jieli
+Product: AB Shutter3
+Interface Number: -1
+
+
+si apreto el botón grande (que dice ios):
+Button Press Detected - Raw Data: [1, 1, 0]
+Button Press Detected - Raw Data: [1, 0, 0]
+
+si apreto el botón chico (que dice android):
+Button Press Detected - Raw Data: [1, 2, 0]
+Button Press Detected - Raw Data: [1, 0, 0]
