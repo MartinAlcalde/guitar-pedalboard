@@ -1,9 +1,10 @@
 import time
 from config.midi_config import midi_config
 from config.joystick_config import joystick_config
-from config.shutter_config import shutter_config
+from config.shutterM3_config import shutter_config
 from devices.joystick import JoystickHandler
-from devices.shutter import ShutterHandler
+from devices.shutterM3 import ShutterM3Handler
+from devices.shutterAB import ShutterABHandler
 from midi.controller import MIDIController
 
 def print_device_info(midi_controller, joystick, shutter):
@@ -30,8 +31,11 @@ def main():
         joystick = JoystickHandler(joystick_config)
         joystick.connect()
         
-        shutter = ShutterHandler(shutter_config)
+        shutter = ShutterM3Handler(shutter_config)
         shutter.connect()
+
+        shutterAB = ShutterABHandler(shutter_config)
+        shutterAB.connect()
         
         # Print device information
         print_device_info(midi_controller, joystick, shutter)

@@ -3,11 +3,11 @@ import hid
 from typing import Optional
 
 @dataclass
-class ShutterConfig:
+class ShutterM3Config:
     vendor_id: int
     product_id: int
 
-class ShutterHandler:
+class ShutterM3Handler:
     """Handles shutter input processing."""
     
     # Button press patterns mapped to their corresponding actions
@@ -28,7 +28,7 @@ class ShutterHandler:
         tuple([5, 61, 224, 252]): '2',
     }
     
-    def __init__(self, config: ShutterConfig):
+    def __init__(self, config: ShutterM3Config):
         self.config = config
         self.device = None
         
