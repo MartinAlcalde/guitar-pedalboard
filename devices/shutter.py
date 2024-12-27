@@ -1,20 +1,30 @@
 from dataclasses import dataclass
 import hid
+from typing import Optional
 
 @dataclass
 class ShutterConfig:
     vendor_id: int
     product_id: int
-    action: str
-    action2: str
 
 class ShutterHandler:
     """Handles shutter input processing."""
     
-    # this is the tiny shutter
-    # BUTTON_PRESS_PATTERN = [2, 2, 0] 
-    BUTTON_PRESS_PATTERN = [1, 1, 0]
-    BUTTON2_PRESS_PATTERN = [1, 2, 0]
+    # Button press patterns mapped to their corresponding actions
+    BUTTON_PATTERNS = {
+        # Tunner
+        tuple([5, 60, 192, 3]): '1',
+        # Distortion
+        tuple([5, 60, 64, 252]): '5',
+        # Overdrive
+        tuple([5, 40, 0, 5]): '4',
+        # Looper
+        tuple([5, 216, 15, 5]): '2',
+        # Preset A
+        tuple([5, 60, 128, 248]): 'a',
+        # Preset B
+        tuple([5, 61, 224, 252]): 'b',
+    }
     
     def __init__(self, config: ShutterConfig):
         self.config = config
@@ -32,18 +42,29 @@ class ShutterHandler:
             self.device = None
             return False
             
-    def read(self):
-        """Read and process shutter input."""
+    def read(self) -> Optional[str]:
+        """Read and process shutter input.
+        
+        Returns:
+            Optional[str]: The action code corresponding to the pressed button,
+                          or None if no valid button press was detected.
+        """
         if not self.device:
             return None
             
         try:
             data = self.device.read(64)
-            if data and data == self.BUTTON_PRESS_PATTERN:
-                return self.config.action
-            elif data and data == self.BUTTON2_PRESS_PATTERN:
-                return self.config.action2 
+            if not data:
+                return None
+                
+            # Convert the data to a tuple for dictionary lookup
+            data_tuple = tuple(data[:4])  # We only need the first 4 bytes
+            
+            # Look up the action in our patterns dictionary
+            return self.BUTTON_PATTERNS.get(data_tuple)
+                
         except Exception as e:
+            print(f"Error reading shutter: {e}")
             return None
             
     def cleanup(self):

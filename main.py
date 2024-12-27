@@ -11,8 +11,10 @@ def print_device_info(midi_controller, joystick, shutter):
     print(f"\nMIDI Controller started on port: {midi_config.port_name}")
     
     if shutter and shutter.device:
-        effect = midi_config.commands[shutter_config.action][1]
-        print(f"\nShutter connected - triggers: {effect}")
+        print("\nShutter connected with mappings:")
+        for pattern, action in shutter.BUTTON_PATTERNS.items():
+            effect = midi_config.commands[action][1]
+            print(f"Button pattern {pattern} -> {effect}")
 
     if joystick and joystick.device:
         print("\nJoystick connected with mappings:")

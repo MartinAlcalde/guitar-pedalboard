@@ -1,0 +1,98 @@
+
+Device Information:
+Vendor ID: 05ac
+Product ID: 022c
+Serial Number: 11-22-33-83-50-aa
+Manufacturer: Apple
+Product: BLE-M3
+Interface Number: -1
+
+top:
+Button Press Detected - Raw Data: [5, 1, 24, 128]
+Button Press Detected - Raw Data: [5, 60, 192, 3]
+Button Press Detected - Raw Data: [4, 1, 0, 0]
+Button Press Detected - Raw Data: [5, 0, 192, 3]
+Button Press Detected - Raw Data: [5, 0, 192, 3]
+Button Press Detected - Raw Data: [4, 0, 0, 0]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 244, 3, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 76, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 120, 5, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 164, 6, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 208, 7, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 252, 8, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 40, 10, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 84, 11, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 128, 12, 1]
+Button Press Detected - Raw Data: [2, 0, 6, 112, 7, 172, 13, 0]
+
+bottom:
+Button Press Detected - Raw Data: [5, 1, 248, 127]
+Button Press Detected - Raw Data: [5, 60, 64, 252]
+Button Press Detected - Raw Data: [4, 1, 0, 0]
+Button Press Detected - Raw Data: [5, 0, 64, 252]
+Button Press Detected - Raw Data: [5, 0, 64, 252]
+Button Press Detected - Raw Data: [4, 0, 0, 0]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 128, 12, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 40, 10, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 252, 8, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 208, 7, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 164, 6, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 120, 5, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 76, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 32, 3, 1]
+Button Press Detected - Raw Data: [2, 7, 6, 112, 7, 244, 1, 1]
+Button Press Detected - Raw Data: [2, 0, 6, 112, 7, 200, 0, 0]
+
+left:
+Button Press Detected - Raw Data: [5, 1, 24, 128]
+Button Press Detected - Raw Data: [5, 40, 0, 5]
+Button Press Detected - Raw Data: [4, 1, 0, 0]
+Button Press Detected - Raw Data: [5, 40, 0, 0]
+Button Press Detected - Raw Data: [5, 40, 0, 0]
+Button Press Detected - Raw Data: [4, 0, 0, 0]
+Button Press Detected - Raw Data: [2, 7, 4, 0, 2, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 138, 2, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 180, 3, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 226, 4, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 14, 6, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 58, 7, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 102, 8, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 146, 9, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 190, 10, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 4, 234, 11, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 0, 4, 22, 13, 112, 4, 0]
+
+right:
+Button Press Detected - Raw Data: [5, 255, 23, 128]
+Button Press Detected - Raw Data: [5, 216, 15, 5]
+Button Press Detected - Raw Data: [4, 1, 0, 0]
+Button Press Detected - Raw Data: [5, 216, 15, 0]
+Button Press Detected - Raw Data: [5, 216, 15, 0]
+Button Press Detected - Raw Data: [4, 0, 0, 0]
+Button Press Detected - Raw Data: [2, 7, 5, 0, 13, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 72, 13, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 28, 12, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 240, 10, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 196, 9, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 152, 8, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 108, 7, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 64, 6, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 20, 5, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 7, 5, 232, 3, 112, 4, 1]
+Button Press Detected - Raw Data: [2, 0, 5, 188, 2, 112, 4, 0]
+
+like (center):
+Button Press Detected - Raw Data: [2, 7, 7, 112, 7, 112, 7, 1]
+Button Press Detected - Raw Data: [5, 1, 248, 127]
+Button Press Detected - Raw Data: [5, 60, 128, 248]
+Button Press Detected - Raw Data: [4, 1, 0, 0]
+Button Press Detected - Raw Data: [4, 0, 0, 0]
+Button Press Detected - Raw Data: [2, 0, 7, 112, 7, 112, 7, 0]
+
+photo:
+Button Press Detected - Raw Data: [5, 1, 248, 127]
+Button Press Detected - Raw Data: [5, 61, 224, 252]
+Button Press Detected - Raw Data: [4, 1, 0, 0]
+Button Press Detected - Raw Data: [2, 7, 8, 0, 8, 96, 13, 1]
+Button Press Detected - Raw Data: [4, 0, 0, 0]
+Button Press Detected - Raw Data: [2, 0, 8, 0, 8, 96, 13, 0]

@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 import rtmidi
 from typing import Dict, Tuple
+from datetime import datetime
+
 
 @dataclass
 class MIDIConfig:
@@ -32,7 +34,8 @@ class MIDIController:
         value = 127 if self.states[key] else 0
         self.send_cc(cc_number, value)
         state = "ON" if self.states[key] else "OFF"
-        print(f"{effect_name}: {state}")
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"[{current_time}] {effect_name}: {state}")
         
     def cleanup(self):
         """Clean up MIDI resources."""
