@@ -40,7 +40,7 @@ class ShutterM3Handler:
             self.device.set_nonblocking(True)
             return True
         except Exception as e:
-            print(f"Warning: Could not connect to shutter device: {e}")
+            print(f"Warning: Could not connect to shutter M3 device: {e}")
             self.device = None
             return False
             

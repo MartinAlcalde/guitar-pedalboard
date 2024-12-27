@@ -2,7 +2,7 @@ from midi.controller import MIDIConfig
 
 # MIDI Configuration
 midi_channel = 1
-port_name = "Python MIDI Controller"
+port_name = "ARC MIDI Controller"
 
 # Key mapping to MIDI codes (key: (cc_number, description))
 commands = {

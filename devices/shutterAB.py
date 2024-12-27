@@ -8,13 +8,13 @@ class ShutterABConfig:
     product_id: int
 
 
-class ShutterM3Handler:
+class ShutterABHandler:
     """Handles shutter input processing."""
     
     # Button press patterns mapped to their corresponding actions
     BUTTON_PATTERNS = {
-        tuple([1, 1, 0]): 'A',
-        tuple([1, 2, 0]): 'B'
+        tuple([1, 1, 0]): 'a', 
+        tuple([1, 2, 0]): 'b'  
     }
     
     def __init__(self, config: ShutterABConfig):
@@ -29,17 +29,12 @@ class ShutterM3Handler:
             self.device.set_nonblocking(True)
             return True
         except Exception as e:
-            print(f"Warning: Could not connect to shutter device: {e}")
+            print(f"Warning: Could not connect to shutter AB device: {e}")
             self.device = None
             return False
             
     def read(self) -> Optional[str]:
-        """Read and process shutter input.
-        
-        Returns:
-            Optional[str]: The action code corresponding to the pressed button,
-                          or None if no valid button press was detected.
-        """
+        """Read and process shutter input."""
         if not self.device:
             return None
             
@@ -48,14 +43,11 @@ class ShutterM3Handler:
             if not data:
                 return None
                 
-            # Convert the data to a tuple for dictionary lookup
-            data_tuple = tuple(data[:4])  # We only need the first 4 bytes
-            
-            # Look up the action in our patterns dictionary
+            data_tuple = tuple(data[:3]) 
             return self.BUTTON_PATTERNS.get(data_tuple)
                 
         except Exception as e:
-            print(f"Error reading shutter: {e}")
+            print(f"Error reading shutter AB: {e}")
             return None
             
     def cleanup(self):
