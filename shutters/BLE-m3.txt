@@ -96,3 +96,26 @@ Button Press Detected - Raw Data: [4, 1, 0, 0]
 Button Press Detected - Raw Data: [2, 7, 8, 0, 8, 96, 13, 1]
 Button Press Detected - Raw Data: [4, 0, 0, 0]
 Button Press Detected - Raw Data: [2, 0, 8, 0, 8, 96, 13, 0]
+
+
+
+
+reduced:
+
+tunner:
+Button Press Detected - Raw Data: [5, 60, 192, 3]
+
+Distortion:
+Button Press Detected - Raw Data: [5, 60, 64, 252]
+
+Overdrive:
+Button Press Detected - Raw Data: [5, 40, 0, 5]
+
+Looper:
+Button Press Detected - Raw Data: [5, 216, 15, 5]
+
+Preset A:
+Button Press Detected - Raw Data: [5, 60, 128, 248]
+
+Preset B:
+Button Press Detected - Raw Data: [5, 61, 224, 252]

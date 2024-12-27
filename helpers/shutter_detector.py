@@ -1,57 +1,70 @@
 import hid
 import time
-import rtmidi
-from config.midi_config import MIDI_CHANNEL, PORT_NAME, COMMANDS
+from typing import List, Dict
 
-class MIDIController:
+class HIDDetector:
     def __init__(self):
-        self.midi_out = rtmidi.MidiOut()
-        self.midi_out.open_virtual_port(PORT_NAME)
-        self.states = {key: False for key in COMMANDS}
-        self.setup_hid_device()
+        self.devices: List[Dict] = []
         
-    def setup_hid_device(self):
-        print("\nBuscando dispositivos HID...")
+    def list_devices(self) -> None:
+        """List all available HID devices."""
+        print("\n=== Available HID Devices ===")
         for device in hid.enumerate():
-            print(f"\nID Vendedor: {device['vendor_id']:04x}")
-            print(f"ID Producto: {device['product_id']:04x}")
-            print(f"Fabricante: {device.get('manufacturer_string', 'N/A')}")
-            print(f"Producto: {device.get('product_string', 'N/A')}")
-            print(f"Path: {device['path']}")
-            print("---")
+            print("\nDevice Information:")
+            print(f"Vendor ID: {device['vendor_id']:04x}")
+            print(f"Product ID: {device['product_id']:04x}")
+            print(f"Serial Number: {device['serial_number']}")
+            print(f"Manufacturer: {device['manufacturer_string']}")
+            print(f"Product: {device['product_string']}")
+            print(f"Interface Number: {device['interface_number']}")
+            self.devices.append(device)
 
-    def send_cc(self, cc_number, value):
-        status_byte = 0xB0 | (MIDI_CHANNEL - 1)
-        self.midi_out.send_message([status_byte, cc_number, value])
-
-    def toggle_effect(self, key):
-        if key not in COMMANDS:
-            return
+    def monitor_device(self, vendor_id: int, product_id: int, duration: int = 30) -> None:
+        """
+        Monitor a specific HID device for button presses.
+        
+        Args:
+            vendor_id: Vendor ID in decimal format
+            product_id: Product ID in decimal format
+            duration: How long to monitor for button presses (in seconds)
+        """
+        try:
+            # Open the device
+            device = hid.device()
+            device.open(vendor_id, product_id)
+            device.set_nonblocking(True)
             
-        cc_number, effect_name = COMMANDS[key]
-        self.states[key] = not self.states[key]
-        value = 127 if self.states[key] else 0
-        self.send_cc(cc_number, value)
-        state = "ON" if self.states[key] else "OFF"
-        print(f"{effect_name}: {state}")
-
-    def cleanup(self):
-        self.midi_out.close_port()
-        del self.midi_out
+            print(f"\nMonitoring device (Vendor ID: {vendor_id:04x}, Product ID: {product_id:04x})")
+            print(f"Press buttons on your device (monitoring for {duration} seconds)...")
+            
+            start_time = time.time()
+            while time.time() - start_time < duration:
+                data = device.read(64)
+                if data:
+                    print(f"Button Press Detected - Raw Data: {data}")
+                time.sleep(0.1)
+                
+            device.close()
+            
+        except Exception as e:
+            print(f"Error monitoring device: {e}")
 
 def main():
-    try:
-        controller = MIDIController()
-        print("\nPresiona 'Ctrl+C' para salir")
-        
-        while True:
-            time.sleep(0.1)
-
-    except KeyboardInterrupt:
-        print("\nPrograma terminado")
-    finally:
-        if 'controller' in locals():
-            controller.cleanup()
+    detector = HIDDetector()
+    
+    # List all available devices
+    detector.list_devices()
+    
+    if detector.devices:
+        print("\nWould you like to monitor a specific device?")
+        try:
+            vendor_id = int(input("Enter Vendor ID (in decimal format): "), 16)
+            product_id = int(input("Enter Product ID (in decimal format): "), 16)
+            duration = int(input("Enter monitoring duration in seconds (default 30): ") or "30")
+            
+            detector.monitor_device(vendor_id, product_id, duration)
+        except ValueError as e:
+            print(f"Error: Invalid input - {e}")
 
 if __name__ == "__main__":
     main()

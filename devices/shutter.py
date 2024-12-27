@@ -12,18 +12,20 @@ class ShutterHandler:
     
     # Button press patterns mapped to their corresponding actions
     BUTTON_PATTERNS = {
-        # Tunner
-        tuple([5, 60, 192, 3]): '1',
-        # Distortion
-        tuple([5, 60, 64, 252]): '5',
-        # Overdrive
-        tuple([5, 40, 0, 5]): '4',
-        # Looper
-        tuple([5, 216, 15, 5]): '2',
-        # Preset A
-        tuple([5, 60, 128, 248]): 'a',
-        # Preset B
-        tuple([5, 61, 224, 252]): 'b',
+        # Distortion (down)
+        tuple([5, 60, 192, 3]): '5',
+        # Overdrive (up)
+        tuple([5, 60, 64, 252]): '4',
+        # Preset A (left)
+        tuple([5, 40, 0, 5]): 'a',
+        # Preset B (right)
+        tuple([5, 216, 15, 5]): 'b',
+        
+        # Tunner (like)
+        tuple([5, 60, 128, 248]): '1',
+        
+        # Looper (camara)
+        tuple([5, 61, 224, 252]): '2',
     }
     
     def __init__(self, config: ShutterConfig):
