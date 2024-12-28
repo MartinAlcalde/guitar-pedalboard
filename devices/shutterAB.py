@@ -11,7 +11,8 @@ class ShutterABConfig:
 class ShutterABHandler:
     """Handles shutter input processing."""
     
-    _connected_paths = set()  # Clase variable para trackear qué dispositivos ya están conectados
+    # Class variable to track which devices are already connected
+    _connected_paths = set()
     
     # Button press patterns mapped to their corresponding actions
     BUTTON_PATTERNS = {
@@ -27,10 +28,10 @@ class ShutterABHandler:
     def connect(self):
         """Attempt to connect to the shutter device."""
         try:
-            # Enumerar todos los dispositivos disponibles con estos IDs
+            # Enumerate all available devices with these IDs
             devices = hid.enumerate(self.config.vendor_id, self.config.product_id)
             
-            # Buscar un dispositivo que no esté ya conectado
+            # Look for a device that isn't already connected
             for device_info in devices:
                 if device_info['path'] not in self._connected_paths:
                     self.path = device_info['path']

@@ -1,7 +1,7 @@
 import time
 from config.midi_config import midi_config
 from config.joystick_config import joystick_config
-from config.shutterM3_config import M3shutter_config
+from config.shutterM3_config import M3_SHUTTERS
 from config.shutterAB_config import AB_SHUTTERS
 from devices.joystick import JoystickHandler
 from devices.shutterM3 import ShutterM3Handler
@@ -22,7 +22,7 @@ class DeviceManager:
     def print_device_info(self):
         print(f"\nMIDI Controller started on port: {midi_config.port_name}")
         
-        # Agrupar handlers por tipo
+        # Group handlers by type
         handler_groups = {}
         for handler in self.handlers:
             handler_type = handler.__class__.__name__
@@ -30,7 +30,7 @@ class DeviceManager:
                 handler_groups[handler_type] = []
             handler_groups[handler_type].append(handler)
             
-        # Imprimir información por grupo
+        # Print information by group
         for handler_type, handlers in handler_groups.items():
             if handlers:
                 print(f"\n{handler_type}: {len(handlers)} device(s) connected")
@@ -67,17 +67,25 @@ def main():
         device_manager = DeviceManager()
         device_manager.midi_controller = MIDIController(midi_config)
         
-        # Initialize handlers
+        # Initialize joystick
         device_manager.add_handler(JoystickHandler(joystick_config))
-        device_manager.add_handler(ShutterM3Handler(M3shutter_config))
         
-        # Inicializar todos los shutters AB encontrados
+        # Initialize all detected M3 shutters
+        m3_connected = 0
+        for shutter_config in M3_SHUTTERS:
+            if device_manager.add_handler(ShutterM3Handler(shutter_config)):
+                m3_connected += 1
+        if m3_connected > 0:
+            print(f"Connected to {m3_connected} M3 shutter(s)")
+        
+        # Initialize all detected AB shutters
         ab_connected = 0
         for shutter_config in AB_SHUTTERS:
             if device_manager.add_handler(ShutterABHandler(shutter_config)):
                 ab_connected += 1
-                
-        print(f"Connected to {ab_connected} AB shutter(s)")
+        
+        if ab_connected > 0:        
+            print(f"Connected to {ab_connected} AB shutter(s)")
         
         # Print device information
         device_manager.print_device_info()

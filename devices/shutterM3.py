@@ -7,8 +7,12 @@ class ShutterM3Config:
     vendor_id: int
     product_id: int
 
+
 class ShutterM3Handler:
     """Handles shutter input processing."""
+    
+    # Class variable to track which devices are already connected
+    _connected_paths = set()
     
     # Button press patterns mapped to their corresponding actions
     BUTTON_PATTERNS = {
@@ -20,25 +24,37 @@ class ShutterM3Handler:
         tuple([5, 40, 0, 5]): 'a',
         # Preset B (right)
         tuple([5, 216, 15, 5]): 'b',
-        
         # Tunner (like)
         tuple([5, 60, 128, 248]): '1',
-        
-        # Looper (camara)
+        # Looper (camera)
         tuple([5, 61, 224, 252]): '2',
     }
     
     def __init__(self, config: ShutterM3Config):
         self.config = config
         self.device = None
+        self.path = None
         
     def connect(self):
         """Attempt to connect to the shutter device."""
         try:
-            self.device = hid.device()
-            self.device.open(self.config.vendor_id, self.config.product_id)
-            self.device.set_nonblocking(True)
-            return True
+            # Enumerate all available devices with these IDs
+            devices = hid.enumerate(self.config.vendor_id, self.config.product_id)
+            
+            # Look for a device that isn't already connected
+            for device_info in devices:
+                if device_info['path'] not in self._connected_paths:
+                    self.path = device_info['path']
+                    self.device = hid.device()
+                    self.device.open_path(self.path)
+                    self.device.set_nonblocking(True)
+                    self._connected_paths.add(self.path)
+                    print(f"Connected to M3 shutter at path: {self.path}")
+                    return True
+                    
+            print("No available M3 shutter found (all are already connected)")
+            return False
+            
         except Exception as e:
             print(f"Warning: Could not connect to shutter M3 device: {e}")
             self.device = None
@@ -59,18 +75,22 @@ class ShutterM3Handler:
             if not data:
                 return None
                 
-            # Convert the data to a tuple for dictionary lookup
-            data_tuple = tuple(data[:4])  # We only need the first 4 bytes
+            data_tuple = tuple(data[:4])  # We need the first 4 bytes for M3
             
             # Look up the action in our patterns dictionary
-            return self.BUTTON_PATTERNS.get(data_tuple)
+            action = self.BUTTON_PATTERNS.get(data_tuple)
+            if action:
+                print(f"M3 device {self.path} action: {action}")
+            return action
                 
         except Exception as e:
-            print(f"Error reading shutter: {e}")
+            print(f"Error reading shutter M3: {e}")
             return None
             
     def cleanup(self):
         """Clean up shutter resources."""
         if self.device:
+            if self.path in self._connected_paths:
+                self._connected_paths.remove(self.path)
             self.device.close()
             self.device = None
