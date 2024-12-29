@@ -68,6 +68,8 @@ class ShutterM3Handler:
                           or None if no valid button press was detected.
         """
         if not self.device:
+            print("no M3 device found to read")
+            self.connect()
             return None
             
         try:
@@ -84,6 +86,8 @@ class ShutterM3Handler:
             return action
                 
         except Exception as e:
+            self.cleanup()
+            self.connect()
             print(f"Error reading shutter M3: {e}")
             return None
             

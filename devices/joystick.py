@@ -79,6 +79,8 @@ class JoystickHandler:
         
     def read(self):
         if not self.device:
+            print("no joystick device found to read")
+            self.connect()
             return None
             
         try:
@@ -89,6 +91,8 @@ class JoystickHandler:
             return self.process_data(data, time.time())
                 
         except Exception as e:
+            self.cleanup()
+            self.connect()
             print(f"Error reading joystick: {e}")
             return None
             

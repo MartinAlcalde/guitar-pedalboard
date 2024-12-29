@@ -53,6 +53,8 @@ class ShutterABHandler:
     def read(self) -> Optional[str]:
         """Read and process shutter input."""
         if not self.device:
+            print("no AB device found to read")
+            self.connect()
             return None
             
         try:
@@ -69,6 +71,8 @@ class ShutterABHandler:
             return action
                 
         except Exception as e:
+            self.cleanup()
+            self.connect()
             print(f"Error reading shutter AB: {e}")
             return None
             
